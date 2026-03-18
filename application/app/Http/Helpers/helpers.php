@@ -15,6 +15,7 @@ use App\Lib\GoogleAuthenticator;
 use App\Models\Subscription;
 use Cocur\Slugify\Slugify;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 
 
 function slug($string)
@@ -341,17 +342,23 @@ function showDateTime($date, $format = 'M d, Y - h:i A')
 
 function getContent($dataKeys, $singleQuery = false, $limit = null, $orderById = false, $activeOnly = false)
 {
+    $filterByStatus = $activeOnly && Schema::hasColumn('frontends', 'status');
+
     if ($singleQuery) {
-        $content = Frontend::where('data_keys', $dataKeys)->when($activeOnly, function ($q) {
-            return $q->where('status', Status::ENABLE);
+        $content = Frontend::where('data_keys', $dataKeys)->when($filterByStatus, function ($q) {
+            return $q->where(function ($statusQuery) {
+                $statusQuery->where('status', Status::ENABLE)->orWhereNull('status');
+            });
         })->orderBy('id', 'desc')->first();
     } else {
         $article = Frontend::query();
         $article->when($limit != null, function ($q) use ($limit) {
             return $q->limit($limit);
         });
-        $article->when($activeOnly, function ($q) {
-            return $q->where('status', Status::ENABLE);
+        $article->when($filterByStatus, function ($q) {
+            return $q->where(function ($statusQuery) {
+                $statusQuery->where('status', Status::ENABLE)->orWhereNull('status');
+            });
         });
         if ($orderById) {
             $content = $article->where('data_keys', $dataKeys)->orderBy('id')->get();
@@ -541,5 +548,4 @@ function showRatings($rating)
     }
     return $ratings;
 }
-
 
