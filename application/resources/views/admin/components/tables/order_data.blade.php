@@ -13,11 +13,11 @@
                         @endif
                     </div>
                     <div class="user--content">
-                        <a class="text-start text-dark" href="{{ appendQuery('search', $order?->user->username) }}">
-                            {{ $order?->user->fullname }}
+                        <a class="text-start text-dark" href="{{ appendQuery('search', $order?->user?->username) }}">
+                            {{ $order?->user?->fullname ?? 'N/A' }}
                         </a>
                         <br>
-                        <a href="{{ route('admin.users.detail', $order?->user_id) }}" class="text-start">{{ '@'.__($order?->user?->username) }}</a>
+                        <a href="{{ route('admin.users.detail', $order?->user_id) }}" class="text-start">{{ '@'.__($order?->user?->username ?? 'N/A') }}</a>
                     </div>
                 </div>
             </div>
@@ -34,5 +34,4 @@
         <td class="text-muted text-center" colspan="100%">{{__($emptyMessage) }}</td>
     </tr>
 @endforelse
-
 
