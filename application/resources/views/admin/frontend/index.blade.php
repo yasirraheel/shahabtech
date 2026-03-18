@@ -127,6 +127,9 @@
                                                 @endif
                                             @endif
                                         @endforeach
+                                        @if($key == 'brand')
+                                            <th>@lang('Status')</th>
+                                        @endif
                                         <th>@lang('Action')</th>
                                     </tr>
                                 </thead>
@@ -160,6 +163,14 @@
                                                     @endif
                                                 @endif
                                             @endforeach
+                                            @if($key == 'brand')
+                                                <td>
+                                                    <label class="switch m-0" title="@lang('Change Status')">
+                                                        <input type="checkbox" class="toggle-switch confirmationBtn" data-action="{{ route('admin.frontend.status', $data->id) }}" data-question="@lang('Are you sure to change this brand status?')" @checked($data->status)>
+                                                        <span class="slider round"></span>
+                                                    </label>
+                                                </td>
+                                            @endif
                                             <td>
                                                 <div class="button--group d-flex align-items-center justify-content-end gap-3">
                                                     @if ($section->element->modal)

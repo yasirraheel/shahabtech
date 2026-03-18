@@ -319,6 +319,7 @@ Route::middleware(['admin'])->group(function () {
             Route::get('frontend-sections/{key}', 'frontendSections')->name('sections');
             Route::post('frontend-content/{key}', 'frontendContent')->name('sections.content');
             Route::get('frontend-element/{key}/{id?}', 'frontendElement')->name('sections.element');
+            Route::post('status/{id}', 'status')->name('status');
             Route::post('remove/{id}', 'remove')->name('remove');
         });
 
@@ -333,4 +334,3 @@ Route::middleware(['admin'])->group(function () {
         });
     });
 });
-

@@ -339,14 +339,19 @@ function showDateTime($date, $format = 'M d, Y - h:i A')
 }
 
 
-function getContent($dataKeys, $singleQuery = false, $limit = null, $orderById = false)
+function getContent($dataKeys, $singleQuery = false, $limit = null, $orderById = false, $activeOnly = false)
 {
     if ($singleQuery) {
-        $content = Frontend::where('data_keys', $dataKeys)->orderBy('id', 'desc')->first();
+        $content = Frontend::where('data_keys', $dataKeys)->when($activeOnly, function ($q) {
+            return $q->where('status', Status::ENABLE);
+        })->orderBy('id', 'desc')->first();
     } else {
         $article = Frontend::query();
         $article->when($limit != null, function ($q) use ($limit) {
             return $q->limit($limit);
+        });
+        $article->when($activeOnly, function ($q) {
+            return $q->where('status', Status::ENABLE);
         });
         if ($orderById) {
             $content = $article->where('data_keys', $dataKeys)->orderBy('id')->get();
@@ -536,6 +541,5 @@ function showRatings($rating)
     }
     return $ratings;
 }
-
 
 

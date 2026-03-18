@@ -251,6 +251,22 @@ class FrontendController extends Controller
         return back()->withNotify($notify);
     }
 
+    public function status($id)
+    {
+        $frontend = Frontend::findOrFail($id);
+
+        if ($frontend->data_keys !== 'brand.element') {
+            $notify[] = ['error', 'Status can only be changed for brand items'];
+            return back()->withNotify($notify);
+        }
+
+        $frontend->status = $frontend->status ? 0 : 1;
+        $frontend->save();
+
+        $notify[] = ['success', 'Brand item status updated successfully'];
+        return back()->withNotify($notify);
+    }
+
 
 
 }

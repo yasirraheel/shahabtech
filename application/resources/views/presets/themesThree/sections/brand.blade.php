@@ -1,5 +1,5 @@
 @php
-$brandElements = getContent('brand.element',false);
+$brandElements = getContent('brand.element', false, null, false, true);
 @endphp
 <!--========================== Coverage Section Start ==========================-->
 <div class="client pb-60 ">
