@@ -47,11 +47,10 @@
   </section>
   <!--========================== Banner Section End ==========================-->
 
-@if($sections->secs != null)
-@foreach(json_decode($sections->secs) as $sec)
+@if($sections && $sections->secs != null)
+@foreach($sections->visibleSections() as $sec)
 @include($activeTemplate.'sections.'.$sec)
 @endforeach
 @endif
 
 @endsection
-

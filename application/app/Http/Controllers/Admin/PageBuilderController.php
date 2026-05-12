@@ -124,13 +124,19 @@ class PageBuilderController extends Controller
     {
         $request->validate([
             'secs' => 'nullable|array',
+            'visible_secs' => 'nullable|array',
         ]);
 
         $page = Page::findOrFail($id);
         if (!$request->secs) {
             $page->secs = null;
+            $page->hidden_sections = null;
         }else{
-            $page->secs = json_encode($request->secs);
+            $sections = array_values($request->secs);
+            $visibleSections = array_values($request->visible_secs ?? []);
+
+            $page->secs = json_encode($sections);
+            $page->hidden_sections = array_values(array_diff($sections, $visibleSections)) ?: null;
         }
         $page->save();
         $notify[] = ['success', 'Page sections has been updated successfully'];

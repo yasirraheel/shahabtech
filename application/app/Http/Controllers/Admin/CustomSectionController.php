@@ -120,7 +120,10 @@ class CustomSectionController extends Controller
 
             if (!empty($sections) && in_array($sectionKey, $sections)) {
                 $filtered = array_filter($sections, fn($s) => $s !== $sectionKey);
-                $page->secs = array_values($filtered); // Reindex
+                $hiddenSections = array_filter($page->hidden_sections ?? [], fn($s) => $s !== $sectionKey);
+
+                $page->secs = json_encode(array_values($filtered));
+                $page->hidden_sections = array_values($hiddenSections) ?: null;
                 $page->save();
             }
         }

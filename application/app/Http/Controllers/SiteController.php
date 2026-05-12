@@ -34,7 +34,7 @@ class SiteController extends Controller
     {
         $page = Page::where('tempname',$this->activeTemplate)->where('slug',$slug)->firstOrFail();
         $pageTitle = $page->name;
-        $sections = $page->secs;
+        $sections = $page;
         return view('Template::pages', compact('pageTitle','sections'));
     }
 

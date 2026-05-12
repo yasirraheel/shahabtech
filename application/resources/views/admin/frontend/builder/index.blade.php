@@ -47,9 +47,17 @@
                         <ol class="simple_with_drop vertical sec-item" id="selected-sections">
                             @if ($pdata->secs != null)
                                 @foreach (json_decode($pdata->secs) as $sec)
+                                    @php
+                                        $hiddenSections = $pdata->hidden_sections ?? [];
+                                        $isVisible = !in_array($sec, $hiddenSections);
+                                    @endphp
                                     <li draggable="true" data-id="{{ $sec }}" class="draggable-item">
                                         <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                         <span>{{ __($sections[$sec]['name'] ?? 'N/A') }}</span>
+                                        <label class="visibility-toggle">
+                                            <input type="checkbox" name="visible_secs[]" value="{{ $sec }}" @checked($isVisible)>
+                                            <span>@lang('Show on homepage')</span>
+                                        </label>
                                         <div class="edit-btn--wrap d-flex gap-2 align-items-center position-absolute">
                                             @if ($sections[$sec]['builder'] ?? false)
                                                 <a href="{{ route('admin.frontend.sections', $sec) }}" target="_blank" class="edit--btn"
@@ -91,6 +99,10 @@
                                 <li draggable="true" data-id="{{ $k }}" class="draggable-item two">
                                     <i class="fa-solid fa-arrows-up-down-left-right"></i>
                                     <span>{{ __($secs['name']) }}</span>
+                                    <label class="visibility-toggle">
+                                        <input type="checkbox" name="visible_secs[]" value="{{ $k }}" checked>
+                                        <span>@lang('Show on homepage')</span>
+                                    </label>
                                     <div class="edit-btn--wrap position-absolute">
                                         @if ($secs['builder'] ?? false)
                                             <a href="{{ route('admin.frontend.sections', $k) }}" target="_blank" class="edit--btn"
@@ -116,11 +128,13 @@
             const $available = $(availableSelector);
             const $selected = $(selectedSelector);
             let draggedItem = null;
+            let draggedFromAvailable = false;
             let $placeholder = $('<li class="placeholder" style="height:60px;border:2px dashed #aaa;margin:8px 0;border-radius:6px;"></li>');
 
             // Drag start
             $(document).on('dragstart', '.draggable-item', function () {
                 draggedItem = $(this);
+                draggedFromAvailable = draggedItem.closest(availableSelector).length > 0;
                 draggedItem.addClass('dragging');
             });
 
@@ -129,6 +143,7 @@
                 draggedItem.removeClass('dragging');
                 $placeholder.remove();
                 draggedItem = null;
+                draggedFromAvailable = false;
             });
 
             // Drag over on selected
@@ -168,6 +183,11 @@
                     $selected.append(draggedItem);
                 }
 
+                draggedItem.find('input[name="visible_secs[]"]').prop('disabled', false);
+                if (draggedFromAvailable) {
+                    draggedItem.find('input[name="visible_secs[]"]').prop('checked', true);
+                }
+
                 // Add delete icon if missing
                 if (!draggedItem.find('.remove-icon').length) {
                     draggedItem.find('div.edit-btn--wrap').append('<i class="fa-regular fa-trash-can remove-icon"></i>');
@@ -182,6 +202,7 @@
                 e.preventDefault();
                 if (!draggedItem) return;
                 $available.append(draggedItem);
+                draggedItem.find('input[name="visible_secs[]"]').prop('disabled', true);
                 draggedItem.find('.remove-icon').remove();
                 updateSelectedInputs();
             });
@@ -190,6 +211,7 @@
             $(document).on('click', '.remove-icon', function () {
                 let $item = $(this).closest('li');
                 $available.append($item);
+                $item.find('input[name="visible_secs[]"]').prop('disabled', true);
                 $item.find('.remove-icon').remove();
                 updateSelectedInputs();
             });
@@ -205,6 +227,7 @@
         $(function () {
             'use strict';
             initDragDrop('#available-sections', '#selected-sections');
+            $('#available-sections').find('input[name="visible_secs[]"]').prop('disabled', true);
         });
     </script>
 @endpush
@@ -266,6 +289,20 @@
 
         .remove-icon:hover {
             color: #b71c1c;
+        }
+
+        .visibility-toggle {
+            align-items: center;
+            display: inline-flex;
+            gap: 8px;
+            margin: 0;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .visibility-toggle input {
+            cursor: pointer;
         }
 
         .simple_with_drop {
