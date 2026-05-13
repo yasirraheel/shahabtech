@@ -130,6 +130,7 @@ if($subscribe){
 @push('script')
 <script src="{{asset('assets/admin/js/apexcharts.min.js')}}"></script>
 <script>
+    @if($subscribe)
     $(document).ready(function() {
         "use strict";
         var end = moment('{{ $subscribe->ends_at }}');
@@ -155,6 +156,7 @@ if($subscribe){
         // initial update
         updateExpiredIn();
     });
+    @endif
 
     (function () {
         "use strict";
@@ -230,4 +232,3 @@ if($subscribe){
     }) ();
 </script>
 @endpush
-
