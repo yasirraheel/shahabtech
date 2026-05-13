@@ -61,6 +61,7 @@
                                 </li>
                             </ul>
                         </div>
+                        <x-captcha />
                         <button type="submit" class="btn btn--base mt-3">@lang('Submit')</button>
             </form>
         </div>

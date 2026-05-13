@@ -37,6 +37,13 @@ class PaymentController extends Controller
 
         if($request->gateway == 'balance'){
 
+            if(!verifyCaptcha()){
+                $notify[] = ['error','Invalid captcha provided'];
+                return back()->withNotify($notify);
+            }
+
+            $request->session()->regenerateToken();
+
             $totalAmount = $request->amount;
             $service = Service::findOrFail($request->service_id);
             // check balance
@@ -96,6 +103,12 @@ class PaymentController extends Controller
             'currency' => 'required',
         ]);
 
+        if(!verifyCaptcha()){
+            $notify[] = ['error','Invalid captcha provided'];
+            return back()->withNotify($notify);
+        }
+
+        $request->session()->regenerateToken();
 
         $totalAmount = $request->amount;
         $user = auth()->user();

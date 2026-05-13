@@ -40,6 +40,7 @@
                         <span>@lang('Payable')</span> <span><span class="payable fw-bold"> 0</span>
                             {{__($general->cur_text)}} </span>
                     </div>
+                    <x-captcha />
                     <button type="submit" class="btn--base mt-3">@lang('Submit')</button>
                 </form>
             </div>
