@@ -38,16 +38,24 @@
                 <form action="{{ route('admin.password.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
-                        <label>@lang('Password')</label>
-                        <input class="form-control" type="password" name="old_password" required>
-                    </div>
-                    <div class="form-group">
                         <label>@lang('New Password')</label>
-                        <input class="form-control" type="password" name="password" required>
+                        <div class="input-group">
+                            <input id="admin-new-password" class="form-control" type="password" name="password" required autocomplete="new-password">
+                            <button type="button" class="input-group-text password-toggle" data-target="#admin-new-password"
+                                aria-label="@lang('Show password')" title="@lang('Show password')">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label>@lang('Confirm Password')</label>
-                        <input class="form-control" type="password" name="password_confirmation" required>
+                        <div class="input-group">
+                            <input id="admin-confirm-password" class="form-control" type="password" name="password_confirmation" required autocomplete="new-password">
+                            <button type="button" class="input-group-text password-toggle" data-target="#admin-confirm-password"
+                                aria-label="@lang('Show password')" title="@lang('Show password')">
+                                <i class="fas fa-eye-slash"></i>
+                            </button>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn--primary float-end">@lang('Change Password')</button>
                 </form>
@@ -55,4 +63,25 @@
         </div>
     </div>
 @endsection
+
+@push('script')
+    <script>
+        (function ($) {
+            'use strict';
+
+            $('.password-toggle').on('click', function () {
+                const button = $(this);
+                const input = $(button.data('target'));
+                const icon = button.find('i');
+                const isPassword = input.attr('type') === 'password';
+
+                input.attr('type', isPassword ? 'text' : 'password');
+                icon.toggleClass('fa-eye-slash', !isPassword);
+                icon.toggleClass('fa-eye', isPassword);
+                button.attr('aria-label', isPassword ? '@lang('Hide password')' : '@lang('Show password')');
+                button.attr('title', isPassword ? '@lang('Hide password')' : '@lang('Show password')');
+            });
+        })(jQuery);
+    </script>
+@endpush
 
