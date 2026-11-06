@@ -54,6 +54,18 @@ class LoginController extends Controller
         return 'username';
     }
 
+    protected function credentials(Request $request)
+    {
+        $login = $request->input($this->username());
+
+        return [
+            'password' => $request->input('password'),
+            function ($query) use ($login) {
+                $query->where('username', $login)->orWhere('email', $login);
+            },
+        ];
+    }
+
     public function login(Request $request)
     {
         $this->validateLogin($request);

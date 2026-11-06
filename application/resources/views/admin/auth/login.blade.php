@@ -13,9 +13,9 @@
                 <form action="{{ route('admin.login') }}" method="POST">
                     @csrf
                     <div class="field mb-3">
-                        <label>@lang('Username')</label>
-                        <div class="position-relative">
-                            <input type="text" name="username" placeholder="@lang('Username')">
+                            <label>@lang('Username or Email')</label>
+                            <div class="position-relative">
+                                <input type="text" name="username" placeholder="@lang('Username or Email')" autocomplete="username">
                         </div>
                     </div>
                     <div class="field">
