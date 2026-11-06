@@ -9012,3 +9012,21 @@ button.deposit-search {
 .js-country-line-hero { font-weight: 600; color: #ffffff; margin-top: 12px; }
 .js-country-line-about { font-weight: 600; margin-bottom: 12px; }
 .js-country-line-testimonial { font-weight: 600; margin-bottom: 12px; }
+/* Country name readability fix: the dark theme rule turned the country
+   name white on the gold pill, and the hero line was dull 60 percent
+   white grey on the dark navy hero. The country name stays black and
+   bold on its gold pill, never white on gold, and the hero line is
+   solid white. About and testimonial sections sit on light backgrounds,
+   so their lines are solid dark navy with the same black on gold name. */
+.banner-left__content p.js-country-line-hero,
+.dark .banner-left__content p.js-country-line-hero { color: #ffffff; }
+.banner-left__content p.js-country-line-hero span.js-country-name,
+.dark .banner-left__content p.js-country-line-hero span.js-country-name,
+.js-country-line-about span.js-country-name,
+.js-country-line-testimonial span.js-country-name,
+.dark .js-country-line-about span.js-country-name,
+.dark .js-country-line-testimonial span.js-country-name { background: hsl(var(--base)); color: #000000; font-weight: 700; padding: 5px 12px; border-radius: 7px; display: inline-block; margin: 0 2px; }
+.js-country-line-about,
+.js-country-line-testimonial,
+.dark .js-country-line-about,
+.dark .js-country-line-testimonial { color: #0b1526; }
