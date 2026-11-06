@@ -4,6 +4,8 @@
  * About and testimonial sections. No API key is needed.
  * The lookup is best effort. If it fails, the page keeps the server
  * rendered USD prices and the country lines stay hidden.
+ * No caching anywhere. The lookup runs fresh on every page load, so
+ * changing location with a VPN shows the new country, flag and prices.
  * Fixed conversion rates from USD, as of 7 Nov 2026. PKR uses the State
  * Bank of Pakistan interbank rate, 1 USD = 276.66 PKR. AED uses its
  * official peg, 1 USD = 3.6725 AED, and SAR uses its peg, 1 USD = 3.75 SAR.
@@ -29,8 +31,6 @@
 
     /* Eurozone country codes, all priced in EUR at 0.86 per USD. */
     var EUROZONE = ['AT', 'BE', 'CY', 'DE', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PT', 'SI', 'SK'];
-
-    var CACHE_KEY = 'shahabtech_visitor_location';
 
     function currencyFor(code) {
         if (RATES[code]) {
@@ -94,27 +94,10 @@
         }
     }
 
-    function readCache() {
-        try {
-            var raw = window.sessionStorage.getItem(CACHE_KEY);
-            return raw ? JSON.parse(raw) : null;
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function writeCache(data) {
-        try {
-            window.sessionStorage.setItem(CACHE_KEY, JSON.stringify(data));
-        } catch (e) {
-            /* Storage unavailable, the lookup simply runs again next page. */
-        }
-    }
-
     function fetchWithTimeout(url, ms) {
         var controller = new AbortController();
         var timer = setTimeout(function () { controller.abort(); }, ms);
-        return fetch(url, { signal: controller.signal })
+        return fetch(url, { signal: controller.signal, cache: 'no-store' })
             .then(function (response) {
                 clearTimeout(timer);
                 if (!response.ok) {
@@ -129,8 +112,11 @@
     }
 
     function detectCountry() {
+        /* Fresh lookup on every page load. The timestamp query stops
+           the browser and any proxy from serving a cached response. */
+        var bust = '?t=' + Date.now();
         /* Primary lookup, free and no key needed. */
-        return fetchWithTimeout('https://ipapi.co/json/', 4000)
+        return fetchWithTimeout('https://ipapi.co/json/' + bust, 4000)
             .then(function (data) {
                 var code = (data.country_code || '').toUpperCase();
                 var name = data.country_name || '';
@@ -141,7 +127,7 @@
             })
             .catch(function () {
                 /* Fallback lookup, free and no key needed. */
-                return fetchWithTimeout('https://ip-api.com/json/', 4000)
+                return fetchWithTimeout('https://ip-api.com/json/' + bust, 4000)
                     .then(function (data) {
                         var code = (data.countryCode || '').toUpperCase();
                         var name = data.country || '';
@@ -154,14 +140,10 @@
     }
 
     function init() {
-        var cached = readCache();
-        if (cached && cached.code && cached.name) {
-            applyLocation(cached.code, cached.name);
-            return;
-        }
+        /* No stored location is ever read. Every page load fetches
+           the current IP location fresh and re-runs the whole update. */
         detectCountry()
             .then(function (location) {
-                writeCache(location);
                 applyLocation(location.code, location.name);
             })
             .catch(function () {
