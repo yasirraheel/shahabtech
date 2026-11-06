@@ -17,7 +17,6 @@
                     <ul class="social-list blog-details">
                         <li class="social-list__item" data-bs-toggle="tooltip" data-bs-placement="top" title="Facebook"> <a class="social-list__link" target="_blank" href="https://www.facebook.com/share.php?u={{ Request::url() }}&title={{slug($service->title)}}"><i class="lab la-facebook-f"></i></a> </li>
                         <li class="social-list__item" data-bs-toggle="tooltip" data-bs-placement="top" title="Linkedin"> <a class="social-list__link" target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url={{ Request::url() }}&title={{slug($service->title)}}&source=behands"><i class="lab la-linkedin-in"></i></a> </li>
-                        <li class="social-list__item" data-bs-toggle="tooltip" data-bs-placement="top" title="Twitter"> <a class="social-list__link" target="_blank" href="https://twitter.com/intent/tweet?status={{slug($service->title)}}+{{ Request::url() }}"><i class="lab la-twitter"></i></a> </li>
                     </ul>
                 </div>
             </div>

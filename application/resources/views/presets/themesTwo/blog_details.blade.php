@@ -39,10 +39,6 @@
                                         title="Linkedin"> <a class="social-list__link" target="_blank"
                                             href="https://www.linkedin.com/shareArticle?mini=true&url={{ Request::url() }}&title={{ slug($blog?->data_values?->title ?? '') }}&source=behands"><i
                                                 class="lab la-linkedin-in"></i></a> </li>
-                                    <li class="social-list__item" data-bs-toggle="tooltip" data-bs-placement="top"
-                                        title="Twitter"> <a class="social-list__link" target="_blank"
-                                            href="https://twitter.com/intent/tweet?status={{ slug($blog?->data_values?->title ?? '') }}+{{ Request::url() }}"><i
-                                                class="lab la-twitter"></i></a> </li>
                                 </ul>
                             </div>
                         </div>
