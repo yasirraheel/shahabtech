@@ -75,10 +75,12 @@
             lines[k].hidden = false;
         }
 
-        /* Header flag next to the logo. */
+        /* Header flag next to the logo. Hide it completely if the flag
+           image fails to load, instead of showing a stretched bar. */
         var flagWrap = document.querySelector('.js-country-flag');
         var flagImg = document.querySelector('.js-flag-img');
         if (flagWrap && flagImg) {
+            flagImg.onerror = function () { flagWrap.hidden = true; };
             flagImg.src = 'https://flagcdn.com/w40/' + countryCode.toLowerCase() + '.png';
             flagImg.alt = countryName;
             flagWrap.hidden = false;

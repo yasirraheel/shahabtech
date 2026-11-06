@@ -52,7 +52,7 @@
                         <a href="{{route('home')}}" class="dark-logo hidden" id="dark-logo">
                             <img src="{{ siteLogo('dark') }}" alt="{{ gs('site_name')}}">
                         </a>
-                        <span class="js-country-flag" hidden><img class="js-flag-img" src="" alt="" width="28" height="20"></span>
+                        <span class="js-country-flag country-flag" hidden><img class="js-flag-img" src="" alt="" width="24" height="18"></span>
                     </div>
                     <div class="menu-wrapper">
                         <ul class="main-menu">

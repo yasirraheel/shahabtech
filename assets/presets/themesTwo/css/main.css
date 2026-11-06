@@ -3489,13 +3489,15 @@ select.form-control.form--control:has(option) ~ .form--label {
     }
 }
 
-.header-wrapper .logo-wrapper img {
+.header-wrapper .logo-wrapper .normal-logo img,
+.header-wrapper .logo-wrapper .dark-logo img {
     width: 240px;
     filter: brightness(1);
 }
 
 @media screen and (max-width: 991px) {
-    .header-wrapper .logo-wrapper img {
+    .header-wrapper .logo-wrapper .normal-logo img,
+    .header-wrapper .logo-wrapper .dark-logo img {
         width: 200px;
     }
 }
@@ -9003,9 +9005,10 @@ button.deposit-search {
 
 /* Location based country flag and country lines (location.js) */
 .header-wrapper .logo-wrapper { display: flex; align-items: center; }
-.js-country-flag { display: inline-flex; align-items: center; margin-left: 12px; }
+.js-country-flag { display: inline-flex; align-items: center; margin-left: 8px; }
 .js-country-flag[hidden] { display: none; }
-.js-country-flag img { width: 28px; height: 20px; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); }
+.header-wrapper .logo-wrapper .country-flag img,
+.header-wrapper .logo-wrapper .js-country-flag img { width: 24px; height: 18px; object-fit: contain; border-radius: 2px; display: inline-block; vertical-align: middle; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); }
 .js-country-line-hero { font-weight: 600; color: #ffffff; margin-top: 12px; }
 .js-country-line-about { font-weight: 600; margin-bottom: 12px; }
 .js-country-line-testimonial { font-weight: 600; margin-bottom: 12px; }
