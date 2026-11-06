@@ -49,7 +49,10 @@
     function applyLocation(countryCode, countryName) {
         var currency = currencyFor(countryCode);
 
-        /* Prices: every element carrying a USD base price converts. */
+        /* Prices: every element carrying a USD base price converts.
+           Only the currency and amount text nodes change. The price
+           element itself, its classes and its styling are never touched,
+           so the converted price keeps the exact original look. */
         var priceEls = document.querySelectorAll('[data-price-usd]');
         for (var i = 0; i < priceEls.length; i++) {
             var el = priceEls[i];
@@ -58,10 +61,14 @@
                 continue;
             }
             el.setAttribute('title', 'USD ' + formatAmount(usd));
-            if (currency.code === 'USD') {
-                el.textContent = 'USD ' + formatAmount(usd);
+            var amount = currency.code === 'USD' ? formatAmount(usd) : formatAmount(usd * currency.rate);
+            var currencyEl = el.querySelector('.js-price-currency');
+            var amountEl = el.querySelector('.js-price-amount');
+            if (currencyEl && amountEl) {
+                currencyEl.textContent = currency.code;
+                amountEl.textContent = amount;
             } else {
-                el.textContent = currency.code + ' ' + formatAmount(usd * currency.rate);
+                el.textContent = currency.code + ' ' + amount;
             }
         }
 

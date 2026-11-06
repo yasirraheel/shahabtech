@@ -599,7 +599,7 @@
     color: hsl(var(--white));
 }
 
-.dark .pricing-plan-item .pricing-plan-item__price .title span {
+.dark .pricing-plan-item .pricing-plan-item__price .title span.price-period {
     color: hsl(var(--white)/0.5);
 }
 .dark .product__price-title span a {
@@ -7628,7 +7628,7 @@ li.login-registration-list__item .social-list__item .social-list__link:hover {
     margin-bottom: 20px;
 }
 
-.pricing-plan-item .pricing-plan-item__price .title span {
+.pricing-plan-item .pricing-plan-item__price .title span.price-period {
     font-size: 16px;
     color: hsl(var(--black)/0.5);
 }

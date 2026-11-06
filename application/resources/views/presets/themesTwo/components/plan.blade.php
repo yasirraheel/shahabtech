@@ -66,7 +66,7 @@
                 <h3 class="title mb-4">{{__($item->name)}}</h3>
             </div>
             <div class="pricing-plan-item__price">
-                <h3 class="title"><span class="js-local-price" data-price-usd="{{ $item->price }}">{{$general->cur_sym}} {{showAmount($item->price)}}</span><span>{{$item->type==1 ? '/m' : '/y'}}</span> </h3>
+                <h3 class="title"><span class="js-local-price" data-price-usd="{{ $item->price }}"><span class="js-price-currency">{{$general->cur_sym}}</span> <span class="js-price-amount">{{showAmount($item->price)}}</span></span><span class="price-period">{{$item->type==1 ? '/m' : '/y'}}</span> </h3>
             </div>
             <div class="pricing-plan-item__list">
                 <ul>
