@@ -53,6 +53,7 @@
 <script src="{{asset($activeTemplateTrue.'js/odometer.min.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'js/viewport.jquery.js')}}"></script>
 <script src="{{asset($activeTemplateTrue.'js/main.js')}}"></script>
+<script src="{{asset($activeTemplateTrue.'js/location.js')}}"></script>
 
 @stack('script-lib')
 

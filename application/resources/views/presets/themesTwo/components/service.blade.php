@@ -22,7 +22,7 @@
                     @endif
                 </p>
                 <div class="service-bottom-wrap d-flex justify-content-between align-items-center">
-                    <p class="price-service">{{__($general->cur_sym)}} {{showAmount($item->price)}}</p>
+                    <p class="price-service"><span class="js-local-price" data-price-usd="{{ $item->price }}">{{__($general->cur_sym)}} {{showAmount($item->price)}}</span></p>
                     <a href="{{ route('service.details', ['slug' => slug($item->title), 'id' => $item->id])}}" class="btn btn--base"> @lang('Buy now') <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>

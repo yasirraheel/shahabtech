@@ -19,6 +19,7 @@
                         </span>
                     </h2>
                     <p class="section-heading__desc mb-30">{{__($testimonial?->data_values?->subheading ?? '')}}</p>
+                    <p class="js-country-line js-country-line-testimonial" hidden>Trusted by clients in <span class="js-country-name"></span> and worldwide.</p>
                 </div>
             </div>
         </div>

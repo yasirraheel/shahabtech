@@ -24,6 +24,7 @@
                         </span>
                     </h2>
                     <p>{{__($banner?->data_values?->sub_heading ?? '')}}</p>
+                    <p class="js-country-line js-country-line-hero" hidden>Built for businesses in <span class="js-country-name"></span>.</p>
                     <a href="{{ route('plans')}}" class="btn btn--base me-2 mb-2">
                         @lang('Get Started') <i class="fa-sharp fas fa-arrow-right"></i>
                     </a>

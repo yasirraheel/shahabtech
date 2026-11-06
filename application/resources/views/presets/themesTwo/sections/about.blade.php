@@ -20,6 +20,7 @@
                             </span>
                          </h2>
                          <p class="section-heading__desc mb-3">{{__($about?->data_values?->description ?? '')}}</p>
+                         <p class="js-country-line js-country-line-about" hidden>Serving clients in <span class="js-country-name"></span> and worldwide.</p>
 
 
                          <ul class="about-service mb-4">

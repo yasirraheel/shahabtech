@@ -28,7 +28,7 @@
                 <!-- ============================= Blog Details Sidebar Start ======================== -->
                 <div class="blog-sidebar-wrapper">
                     <div class="blog-sidebar text-center">
-                        <h5>@lang('Price'): {{$general->cur_sym}} {{showAmount($service->price)}}</h5>
+                        <h5>@lang('Price'): <span class="js-local-price" data-price-usd="{{ $service->price }}">{{$general->cur_sym}} {{showAmount($service->price)}}</span></h5>
                         <a href="{{route('user.service.payment',$service->id)}}" class="btn btn--base">@lang('Buy Now')</a>
                     </div>
                     <div class="blog-sidebar">

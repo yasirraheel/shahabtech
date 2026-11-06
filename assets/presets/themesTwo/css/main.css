@@ -9000,3 +9000,12 @@ button.deposit-search {
 }
 
 /*# sourceMappingURL=main.css.map */
+
+/* Location based country flag and country lines (location.js) */
+.header-wrapper .logo-wrapper { display: flex; align-items: center; }
+.js-country-flag { display: inline-flex; align-items: center; margin-left: 12px; }
+.js-country-flag[hidden] { display: none; }
+.js-country-flag img { width: 28px; height: 20px; object-fit: cover; border-radius: 3px; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15); }
+.js-country-line-hero { font-weight: 600; color: #ffffff; margin-top: 12px; }
+.js-country-line-about { font-weight: 600; margin-bottom: 12px; }
+.js-country-line-testimonial { font-weight: 600; margin-bottom: 12px; }
