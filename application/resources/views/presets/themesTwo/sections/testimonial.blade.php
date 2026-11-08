@@ -29,10 +29,6 @@
                 <div class="testimonails-card">
                     <div class="testimonial-item">
                         <div class="testimonial-item__quate"><i class="fas fa-quote-right"></i></div>
-                        <div class="testimonial-item__thumb">
-                            <img src="{{getImage(getFilePath('testimonial').'/'.$item?->data_values?->testimonial_image ?? '')}}" alt="testimonial img">
-                        </div>
-
                         <div class="testimonial-item__content">
                             <div class="testimonial-item__info">
 
